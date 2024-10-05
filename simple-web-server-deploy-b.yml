@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-web-server-b
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: simple-web-server-b
+  template:
+    metadata:
+      labels:
+        name: simple-web-server-b
+    spec:
+      containers:
+      - name: simple-web-server
+        image: rlmflores/simple-web-server:20241005093430
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 5000
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: simple-web-server-b
+spec:
+  selector:
+    name: simple-web-server-b
+  type:  ClusterIP
+  ports:
+  - name: http-python-app
+    port: 80
+    targetPort:  5000

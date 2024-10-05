@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  curl
+  labels:
+    name: curl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: curl
+  template:
+    metadata:
+      labels:
+        name: curl
+    spec:
+      containers:
+      - image:  curlimages/curl:latest
+        name: curl
+        command: ["sleep"]
+        args: ["infinity"]
