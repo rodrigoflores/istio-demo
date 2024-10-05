@@ -15,7 +15,7 @@ spec:
         name: curl
     spec:
       containers:
-      - image:  curlimages/curl:latest
+      - image:  rlmflores/curl-with-jq:20241005110518
         name: curl
         command: ["sleep"]
         args: ["infinity"]

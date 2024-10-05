@@ -1,0 +1,42 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: simple-web-server
+spec:
+  hosts:
+  - simple-web-server
+  http:
+  - match:
+      - headers:
+          app:
+            exact: "simple-web-server-a"
+    route:
+    - destination:
+        host: simple-web-server-a
+  - match:
+      - headers:
+          app:
+            exact: "simple-web-server-b"
+    route:
+    - destination:
+        host: simple-web-server-b
+  - route:
+    - destination:
+        host: simple-web-server-a
+      weight: 50
+    - destination:
+        host: simple-web-server-b
+      weight: 50
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: simple-web-server
+spec:
+  selector:
+    app: simple-web-server
+  type:  ClusterIP
+  ports:
+  - name: http-python-app
+    port: 80
+    targetPort:  5000

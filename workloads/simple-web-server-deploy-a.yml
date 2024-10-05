@@ -7,21 +7,16 @@ spec:
   selector:
     matchLabels:
       name: simple-web-server-a
+      app: simple-web-server
   template:
     metadata:
       labels:
         name: simple-web-server-a
+        app: simple-web-server
     spec:
       containers:
       - name: simple-web-server
         image: rlmflores/simple-web-server:20241005093430
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
         ports:
         - containerPort: 5000
 
@@ -33,6 +28,7 @@ metadata:
 spec:
   selector:
     name: simple-web-server-a
+    app: simple-web-server
   type:  ClusterIP
   ports:
   - name: http-python-app
