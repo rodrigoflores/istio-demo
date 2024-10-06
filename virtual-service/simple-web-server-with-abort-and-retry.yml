@@ -27,11 +27,10 @@ spec:
     - destination:
         host: simple-web-server-b
       weight: 50
-    fault:
-      abort:
-        httpStatus: 555
-        percentage:
-          value: 10.0
+    retries:
+      attempts: 1
+      perTryTimeout: 2s
+      retryOn: "5xx"
 
 ---
 kind: Service

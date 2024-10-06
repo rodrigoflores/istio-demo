@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: simple-web-server
-        image: rlmflores/simple-web-server:20241005093430
+        image: rlmflores/simple-web-server:20241005130057
         ports:
         - containerPort: 5000
 

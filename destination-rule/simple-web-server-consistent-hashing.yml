@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: simple-web-server-a
+spec:
+  host: simple-web-server-a
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpHeaderName: customer-id
