@@ -3,7 +3,7 @@
 ```shell
 kubectl apply -f workloads/simple-web-server-deploy-a.yml
 kubectl apply -f workloads/simple-web-server-deploy-b.yml
-kubectl apply -f workloads/curl-deploy.md
+kubectl apply -f workloads/curl-deploy.yml
 ```
 
 ## Test
@@ -210,4 +210,18 @@ kubectl apply -f destination-rule/simple-web-server-consistent-hashing.yml
 
 ```shell
 for i in $(seq 100); do curl  simple-web-server-a -H "customer-id: e66919cd-6ca1-4319-8f5b-038249dcf005" -s | jq .meta.hostname ;done  | sort | uniq -c
+```
+
+# Custom filter
+
+```shell
+kubectl apply -f │./custom-filter/url-rewrite.yml
+```
+
+```shell
+istioctl proxy-config log deploy/curl --level lua:debug
+```
+
+```shell
+for x in $(seq 100); do curl simple-web-server -s -H "customer-id: 333" | jq .meta.hostname -r; done | sort | uniq -c
 ```
