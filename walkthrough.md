@@ -1,3 +1,7 @@
+# Make sure you're pointing to the correct kubernetes cluster
+
+Blank
+
 # Install Istio
 
 Make sure you're pointing to the correct kubernetes cluster
@@ -215,7 +219,7 @@ for i in $(seq 100); do curl  simple-web-server-a -H "customer-id: e66919cd-6ca1
 # Custom filter
 
 ```shell
-kubectl apply -f │./custom-filter/url-rewrite.yml
+kubectl apply -f ./custom-filter/url-rewrite.yml
 ```
 
 ```shell
