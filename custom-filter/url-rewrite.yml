@@ -1,0 +1,36 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: url-rewrite
+spec:
+  workloadSelector:
+    labels:
+      name: curl
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_OUTBOUND
+    patch:
+      operation: INSERT_BEFORE
+      value:
+       name: envoy.filters.http.lua
+       typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+          defaultSourceCode:
+            inlineString: |
+              function envoy_on_request(request_handle)
+                local customer_id = request_handle:headers():get("customer-id")
+                request_handle:logInfo("Customer-id: " .. customer_id)
+
+                if customer_id ~= null then
+                  if tonumber(customer_id) / 2 == 0 then
+                    request_handle:logInfo("Setting authority to simple-web-server-a as customer-id is even")
+                    request_handle:headers():replace("app", "simple-web-server-a")
+                  else
+                    request_handle:logInfo("Setting authority to simple-web-server-b as customer-id is odd")
+                    request_handle:headers():replace("app", "simple-web-server-b")
+                  end
+                else
+                  request_handle:logInfo("customer-id is null, using random selection")
+                end
+              end
