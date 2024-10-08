@@ -1,3 +1,17 @@
+# Install Istio
+
+Make sure you're pointing to the correct kubernetes cluster
+
+```shell
+istioctl install --set meshConfig.accessLogFile=/dev/stdout --set meshConfig.accessLogEncoding=JSON --set profile=minimal
+```
+
+## Enable istio on all workloads on default namespace
+
+```shell
+kubectl label namespace default istio-injection=enabled
+```
+
 # Add all workload resources
 
 ```shell
@@ -15,20 +29,6 @@ Get a shell on curl pod
 ```shell
 curl simple-web-server-a
 curl simple-web-server-b
-```
-
-# Install Istio
-
-Make sure you're pointing to the correct kubernetes cluster
-
-```shell
-istioctl install --set meshConfig.accessLogFile=/dev/stdout --set meshConfig.accessLogEncoding=JSON
-```
-
-## Enable istio on all workloads on default namespace
-
-```shell
-kubectl label namespace default istio-injection=enabled
 ```
 
 ## Test
