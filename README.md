@@ -10,3 +10,5 @@ Colima + Minikube is the easiest way.
 colima start --cpu 4 --memory 8
 minikube start --driver=docker --nodes=2 --cpus=2 --memory=4096
 ```
+
+With the cluster working, you can follow the instructions on walkthrough.md
