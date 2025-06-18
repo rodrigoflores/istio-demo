@@ -23,7 +23,7 @@ spec:
                 request_handle:logInfo("Customer-id: " .. customer_id)
 
                 if customer_id ~= null then
-                  if tonumber(customer_id) / 2 == 0 then
+                  if math.fmod(tonumber(customer_id),2) == 0 then
                     request_handle:logInfo("Setting authority to simple-web-server-a as customer-id is even")
                     request_handle:headers():replace("app", "simple-web-server-a")
                   else
